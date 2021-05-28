@@ -37,9 +37,10 @@ class PostsController extends Controller
                 //return "un image Exite-- ".$image;
                 $name = $image->getClientOriginalName();
                 $extension = $image->getClientOriginalExtension();
-                $finaleName = 'ClD_'.str::random(3).'_'.time().'.'.$extension;
+                $finaleName = 'CLD_'.str::random(3).'_'.time().'.'.$extension;
                 $uploadedFileUrl = Cloudinary::upload($image->getRealPath(),[
-                    'folder'=>'TestFolder'
+                    'public_id'=>$finaleName, //le nom donnees au fichier
+                    'folder'=>'TestFolder'//le dossier qu'on vas mettre le fichier
                 ])->getSecurePath();
                 //$image->storeAs('public/images', $finaleName);
                 Photos::create([
@@ -48,7 +49,7 @@ class PostsController extends Controller
                 ]);
                 //$tb = $image;
                 //dd($image);
-                //echo $finaleName.'<br/>';
+                //echo $uploadedFileUrl.'<br/>';
                // echo auth::user()->id;
             }
             $img = Photos::all();
